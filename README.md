@@ -2,6 +2,8 @@
 
 An open-source AI character studio that runs on **open-weight models** as ComfyUI workflows, through the [Comfy SDK](https://github.com/Comfy-Org/comfy-typescript-sdk): on Comfy Cloud, or free on your own ComfyUI. Design an original character (person, animal, dog or cat with wings, robot, object or food), dress them in any outfit (even from a shop screenshot), and put them in storyboards for a video model.
 
+**Watch the 2-minute walkthrough:** [`media/walkthrough.mp4`](media/walkthrough.mp4)
+
 Every recipe (the prompts behind each control) is plain text in `lib/`, and every workflow is a plain graph in `lib/workflows.ts`, so anyone can read, fork and improve it.
 
 | Step | What you do | Default model |
@@ -123,6 +125,10 @@ Images must be at least 256×256 pixels; the uploader resizes large photos for y
 ## Credits
 
 Open models: Qwen Image 2.1 (Qwen team), FLUX 3 Image Klein (Black Forest Labs) and MOSS-Image (OpenMOSS, Apache 2.0), each under its own license. Structure based on [Comfy-Org/comfy-cinematic-studio](https://github.com/Comfy-Org/comfy-cinematic-studio) (MIT).
+
+## Walkthrough video
+
+Voice by birddogai (Voicebox). Music: "Arcade Groove" by birddogai, made with Suno and used under its commercial license.
 
 ## License
 
