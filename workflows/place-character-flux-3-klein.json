@@ -1,0 +1,213 @@
+{
+  "unet": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "flux3-image-klein-int8-convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "_meta": {
+      "title": "FLUX 3 Klein"
+    }
+  },
+  "clip": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_4b_int8_convrot.safetensors",
+      "type": "flux3",
+      "device": "default"
+    },
+    "_meta": {
+      "title": "Text encoder"
+    }
+  },
+  "vae": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "_meta": {
+      "title": "VAE"
+    }
+  },
+  "text": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "clip",
+        0
+      ],
+      "text": [
+        "layout",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Prompt"
+    }
+  },
+  "negative": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": {
+      "conditioning": [
+        "text",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "decode": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "sample",
+        0
+      ],
+      "vae": [
+        "vae",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Decode"
+    }
+  },
+  "save": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "decode",
+        0
+      ],
+      "filename_prefix": "studio"
+    },
+    "_meta": {
+      "title": "Save"
+    }
+  },
+  "ref0": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "location.png"
+    },
+    "_meta": {
+      "title": "Image to edit"
+    }
+  },
+  "ref1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "character_sheet.png"
+    },
+    "_meta": {
+      "title": "Reference 1"
+    }
+  },
+  "boxes": {
+    "class_type": "CreateBoundingBoxes",
+    "inputs": {
+      "background": [
+        "ref0",
+        0
+      ],
+      "width": 1824,
+      "height": 1024,
+      "editor_state": {
+        "__value__": [
+          {
+            "x": 700,
+            "y": 300,
+            "width": 400,
+            "height": 600,
+            "metadata": {
+              "type": "obj",
+              "text": "",
+              "desc": "area to change",
+              "palette": []
+            }
+          }
+        ]
+      },
+      "last_incoming": {
+        "__value__": []
+      }
+    },
+    "_meta": {
+      "title": "Edit box"
+    }
+  },
+  "layout": {
+    "class_type": "Flux3LayoutPrompt",
+    "inputs": {
+      "element": [
+        "boxes",
+        2
+      ],
+      "prompt": "In <ref_image_0>, place the character from <ref_image_1> in the area <obj_1>, at a natural scale for the scene, matching its light and perspective."
+    },
+    "_meta": {
+      "title": "Layout prompt"
+    }
+  },
+  "refs": {
+    "class_type": "ReferenceMultiLatent",
+    "inputs": {
+      "positive": [
+        "text",
+        0
+      ],
+      "negative": [
+        "negative",
+        0
+      ],
+      "vae": [
+        "vae",
+        0
+      ],
+      "resolution": "resize",
+      "resolution.megapixels": 1.8,
+      "images.image0": [
+        "ref0",
+        0
+      ],
+      "images.image1": [
+        "ref1",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "References"
+    }
+  },
+  "sample": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "unet",
+        0
+      ],
+      "positive": [
+        "refs",
+        0
+      ],
+      "negative": [
+        "refs",
+        1
+      ],
+      "latent_image": [
+        "refs",
+        2
+      ],
+      "seed": 42,
+      "steps": 16,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1
+    },
+    "_meta": {
+      "title": "Sampler"
+    }
+  }
+}

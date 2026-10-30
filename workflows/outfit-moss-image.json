@@ -1,0 +1,234 @@
+{
+  "unet": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "moss_image_sft_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "_meta": {
+      "title": "MOSS-Image"
+    }
+  },
+  "lora": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "unet",
+        0
+      ],
+      "lora_name": "moss_image_edit_lora_rank_64_bf16.safetensors",
+      "strength_model": 1
+    },
+    "_meta": {
+      "title": "Edit LoRA"
+    }
+  },
+  "guidance": {
+    "class_type": "SkipLayerGuidanceDiTSimple",
+    "inputs": {
+      "model": [
+        "lora",
+        0
+      ],
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0,
+      "end_percent": 1
+    },
+    "_meta": {
+      "title": "Skip layer guidance"
+    }
+  },
+  "clip": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3.5_9b_w4a8_gptq.safetensors",
+      "type": "moss_image",
+      "device": "default"
+    },
+    "_meta": {
+      "title": "Text encoder"
+    }
+  },
+  "vae": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "flux2-vae_small.safetensors"
+    },
+    "_meta": {
+      "title": "VAE"
+    }
+  },
+  "ref0": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "character_sheet.png"
+    },
+    "_meta": {
+      "title": "Reference 0"
+    }
+  },
+  "ref0s": {
+    "class_type": "ImageScaleToTotalPixels",
+    "inputs": {
+      "image": [
+        "ref0",
+        0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 2,
+      "resolution_steps": 16
+    },
+    "_meta": {
+      "title": "Reference 0 scaled"
+    }
+  },
+  "ref1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "clothing.png"
+    },
+    "_meta": {
+      "title": "Reference 1"
+    }
+  },
+  "ref1s": {
+    "class_type": "ImageScaleToTotalPixels",
+    "inputs": {
+      "image": [
+        "ref1",
+        0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 2,
+      "resolution_steps": 16
+    },
+    "_meta": {
+      "title": "Reference 1 scaled"
+    }
+  },
+  "text": {
+    "class_type": "TextEncodeMOSSImageEdit",
+    "inputs": {
+      "clip": [
+        "clip",
+        0
+      ],
+      "prompt": "The same two-panel character sheet as image 1, with the same character, now wearing the exact clothing shown in image 2.",
+      "edit_format": "Moss-Image-Edit",
+      "image_strength": 1,
+      "vae": [
+        "vae",
+        0
+      ],
+      "images.image_0": [
+        "ref0s",
+        0
+      ],
+      "images.image_1": [
+        "ref1s",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Prompt"
+    }
+  },
+  "negative": {
+    "class_type": "TextEncodeMOSSImageEdit",
+    "inputs": {
+      "clip": [
+        "clip",
+        0
+      ],
+      "prompt": "nsfw, worst quality, bad anatomy, watermark, jpeg artifact",
+      "edit_format": "Moss-Image-Edit",
+      "image_strength": 1,
+      "vae": [
+        "vae",
+        0
+      ],
+      "images.image_0": [
+        "ref0s",
+        0
+      ],
+      "images.image_1": [
+        "ref1s",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "latent": {
+    "class_type": "EmptyFlux2LatentImage",
+    "inputs": {
+      "width": 1664,
+      "height": 1248,
+      "batch_size": 1
+    },
+    "_meta": {
+      "title": "Size"
+    }
+  },
+  "sample": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "guidance",
+        0
+      ],
+      "positive": [
+        "text",
+        0
+      ],
+      "negative": [
+        "negative",
+        0
+      ],
+      "latent_image": [
+        "latent",
+        0
+      ],
+      "seed": 42,
+      "steps": 30,
+      "cfg": 4,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1
+    },
+    "_meta": {
+      "title": "Sampler"
+    }
+  },
+  "decode": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "sample",
+        0
+      ],
+      "vae": [
+        "vae",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Decode"
+    }
+  },
+  "save": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "decode",
+        0
+      ],
+      "filename_prefix": "studio"
+    },
+    "_meta": {
+      "title": "Save"
+    }
+  }
+}

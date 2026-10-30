@@ -1,0 +1,51 @@
+{
+  "clip": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3.5_9b_w4a8_gptq.safetensors",
+      "type": "moss_image",
+      "device": "default"
+    },
+    "_meta": {
+      "title": "Text model"
+    }
+  },
+  "write": {
+    "class_type": "TextGenerate",
+    "inputs": {
+      "clip": [
+        "clip",
+        0
+      ],
+      "prompt": "Brief: describe what happens here.",
+      "system_prompt": "You plan short storyboards. Reply with one numbered line per frame: what happens, framing and camera.",
+      "max_length": 1500,
+      "sampling_mode": "on",
+      "sampling_mode.temperature": 0.8,
+      "sampling_mode.top_k": 64,
+      "sampling_mode.top_p": 0.95,
+      "sampling_mode.min_p": 0.05,
+      "sampling_mode.repetition_penalty": 1.05,
+      "sampling_mode.seed": 42,
+      "thinking": false,
+      "use_default_template": true
+    },
+    "_meta": {
+      "title": "Write"
+    }
+  },
+  "save": {
+    "class_type": "SaveText",
+    "inputs": {
+      "text": [
+        "write",
+        0
+      ],
+      "filename_prefix": "studio-plan",
+      "format": "txt"
+    },
+    "_meta": {
+      "title": "Save"
+    }
+  }
+}
