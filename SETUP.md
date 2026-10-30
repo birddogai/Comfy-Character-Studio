@@ -16,8 +16,8 @@ Follow these steps in order to install and start the app for the person you are 
 ## 2. Get the code
 
 ```sh
-git clone https://github.com/birddogai/character-studio.git
-cd character-studio
+git clone https://github.com/birddogai/Comfy-Character-Studio.git
+cd Comfy-Character-Studio
 ```
 
 (Skip this if you are already inside the repo.)

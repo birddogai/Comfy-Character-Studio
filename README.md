@@ -23,7 +23,7 @@ Every workflow the studio runs is in [`workflows/`](workflows/) as a ComfyUI fil
 
 Open this folder (or an empty one) in Claude Code, Codex, Cursor or any coding agent and paste:
 
-> Set up Character Studio from https://github.com/birddogai/character-studio by following its SETUP.md. Ask me for my Comfy API key (or my local ComfyUI address) when you need it; don't print it back.
+> Set up Character Studio from https://github.com/birddogai/Comfy-Character-Studio by following its SETUP.md. Ask me for my Comfy API key (or my local ComfyUI address) when you need it; don't print it back.
 
 The agent clones the repo, installs it, writes `.env.local`, runs the tests and starts the app. [`SETUP.md`](SETUP.md) has the exact steps it follows, so you can check them first.
 
@@ -33,8 +33,8 @@ The agent clones the repo, installs it, writes `.env.local`, runs the tests and 
 2. Clone and configure the app:
 
    ```sh
-   git clone https://github.com/birddogai/character-studio.git
-   cd character-studio
+   git clone https://github.com/birddogai/Comfy-Character-Studio.git
+   cd Comfy-Character-Studio
    cp .env.example .env.local
    ```
 
