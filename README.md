@@ -1,8 +1,7 @@
 # Character Studio
 
-[![Watch the 2-minute walkthrough](media/poster.jpg)](media/walkthrough.mp4)
+https://github.com/user-attachments/assets/ed1d586d-3ff7-4076-a234-b10069258e15
 
-▶ **[Watch the 2-minute walkthrough](media/walkthrough.mp4)**
 
 An open-source AI character studio that runs on **open-weight models** as ComfyUI workflows, through the [Comfy SDK](https://github.com/Comfy-Org/comfy-typescript-sdk): on Comfy Cloud, or free on your own ComfyUI. Design an original character (person, animal, dog or cat with wings, robot, object or food), dress them in any outfit (even from a shop screenshot), and put them in storyboards for a video model.
 
