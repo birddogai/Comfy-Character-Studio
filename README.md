@@ -123,9 +123,22 @@ The app tells you what went wrong in plain words under the button you pressed, w
 
 Images must be at least 256×256 pixels; the uploader resizes large photos for you.
 
+## Model licenses
+
+This app's code is MIT. It doesn't include any model weights: you download them yourself (or run them on Comfy Cloud), and each model has its own license. Check the license before you use the images commercially, for example in ads or product videos.
+
+| Model | Used for | License (check the official page) |
+| --- | --- | --- |
+| Qwen Image 2.1 (Qwen team) | Default for character sheets, outfits and storyboards | [Qwen Research License](https://huggingface.co/Qwen/Qwen-Image-2.1/blob/main/LICENSE): **non-commercial** (research and evaluation) unless you get a commercial license from Qwen |
+| FLUX 3 Klein (Black Forest Labs) | Optional model for sheets, outfits and storyboards | FLUX Kommunity License: reported as free commercial use under $5M yearly revenue, paid above that. See [bfl.ai/licensing](https://bfl.ai/licensing) |
+| MOSS-Image (OpenMOSS) | Optional model for sheets and outfits | Reported as Apache 2.0. See the [OpenMOSS model cards](https://huggingface.co/OpenMOSS-Team) |
+| Qwen3.5 text model | Optional storyboard shot planner | See its model card |
+
+For commercial work, pick a model in the app whose license allows it, or get the needed license.
+
 ## Credits
 
-Open models: Qwen Image 2.1 (Qwen team), FLUX 3 Image Klein (Black Forest Labs) and MOSS-Image (OpenMOSS, Apache 2.0), each under its own license. Structure based on [Comfy-Org/comfy-cinematic-studio](https://github.com/Comfy-Org/comfy-cinematic-studio) (MIT).
+Structure based on [Comfy-Org/comfy-cinematic-studio](https://github.com/Comfy-Org/comfy-cinematic-studio) (MIT).
 
 ## Walkthrough video
 
